@@ -37,7 +37,7 @@ paratifull=paratifull.drop(["HORA (UTC)"],axis=1)
 """
 SALVAR COMO NOVO ARQUIVO
 """
-paratifull.to_csv("INMET_SE_RJ_A619_PARATI_JUNTO_01-01-2009_A_31-12-2019.csv",encoding='latin-1')
+paratifull.to_csv("INMET_SE_RJ_A619_PARATI_JUNTO_01-01-2009_A_31-12-2018.csv",encoding='latin-1')
 iguape1=pd.read_csv("INMET_SE_SP_A712_IGUAPE_01-01-2009_A_31-12-2009.csv",encoding='latin-1')
 iguape2=pd.read_csv("INMET_SE_SP_A712_IGUAPE_01-01-2010_A_31-12-2010.csv",encoding='latin-1')
 iguape3=pd.read_csv("INMET_SE_SP_A712_IGUAPE_01-01-2011_A_31-12-2011.csv",encoding='latin-1')
