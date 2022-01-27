@@ -39,15 +39,16 @@ paratifull=paratifull.rename(columns={"DATA (YYYY-MM-DD)": 'local time', paratif
 paratifull.loc[paratifull['ghi mean'] == -9999, 'ghi mean'] = 0
 paratifull["month"]=paratifull["local time"].dt.to_period("M")
 paratifull["n_missing"]=(paratifull.groupby("month")['air temp mean'].transform(lambda d:(d==missing).sum()))
-paratifull['air temp mean']=np.where((paratifull['air temp mean']==missing) & (paratifull["n_missing"]>threshold),np.nan,paratifull['air temp mean'])
 paratifull['air temp mean']=np.where((paratifull['air temp mean']==missing) & (paratifull["n_missing"]<threshold),0,paratifull['air temp mean'])
 paratifull["n_missing"]=(paratifull.groupby("month")['dew point mean'].transform(lambda d:(d==missing).sum()))
-paratifull['dew point mean']=np.where((paratifull['dew point mean']==missing) & (paratifull["n_missing"]>threshold),np.nan,paratifull['dew point mean'])
 paratifull['dew point mean']=np.where((paratifull['dew point mean']==missing) & (paratifull["n_missing"]<threshold),0,paratifull['dew point mean'])
 paratifull["n_missing"]=(paratifull.groupby("month")['wind speed mean'].transform(lambda d:(d==missing).sum()))
-paratifull['wind speed mean']=np.where((paratifull['wind speed mean']==missing) & (paratifull["n_missing"]>threshold),np.nan,paratifull['wind speed mean'])
 paratifull['wind speed mean']=np.where((paratifull['wind speed mean']==missing) & (paratifull["n_missing"]<threshold),0,paratifull['wind speed mean'])
-paratifull.to_csv("INMET_SE_RJ_A619_PARATI_JUNTO_01-01-2009_A_31-12-2018.csv",encoding='latin-1')
+df=paratifull
+paratifull["local time"]=pd.to_datetime(df["local time"])
+date = pd.to_datetime(paratifull['local time']).dt.strftime("%Y-%m")
+paratifull= paratifull.groupby(date).filter(lambda x: x['air temp mean'].eq(-9999).sum() < 175)
+paratifull.to_csv("parati.csv",encoding='latin-1')
 
 
 
